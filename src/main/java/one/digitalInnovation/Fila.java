@@ -1,30 +1,31 @@
 package one.digitalInnovation;
 
-public class Fila {
-    private No refNoEntrada;
+public class Fila<T> {
+    private No<T> refNoEntrada;
 
     public Fila() {
         this.refNoEntrada = null;
     }
 
-    public No first(){
+    public T first(){ //O metodo First retorna o primeiro nó da fila
         if(!isEmpty()){
             No primeiroNo = refNoEntrada;
             while (true){
                 if(primeiroNo.getRefNo() != null){
                     primeiroNo = primeiroNo.getRefNo();
+                    //O metodo percorre a lista até chegar ao nó que aponta para null.
                 }
                 else{
                     break;
                 }
             }
-            return primeiroNo;
+            return (T) primeiroNo.getObject();
         }
-        return null;
+        return null; //Caso a lista estiver vazia é retornado null.
     }
 
 
-    public No dequeue(){
+    public T dequeue(){ //O metodo dequeue remove o primeiro nó a entrar da fila
         if(!isEmpty()){
             No primeiroNo = refNoEntrada;
             No aux = refNoEntrada;
@@ -32,21 +33,26 @@ public class Fila {
                 if(primeiroNo.getRefNo() != null){
                     aux = primeiroNo;
                     primeiroNo = primeiroNo.getRefNo();
+                    //O metodo percorre a lista até chegar ao nó que aponta para null.
                 } else{
                     aux.setRefNo(null);
+                    //Para remover o primeiro nó da lista o segundo nó aponta para null.
                     break;
                 }
 
             }
-            return primeiroNo;
+            return (T) primeiroNo.getObject();
         }
         return null;
     }
 
 
-    public void enqueue(No noNovo){
+    public void enqueue(T object){//Adiciona um nó a lista.
+        No noNovo = new No(object);
         noNovo.setRefNo(refNoEntrada);
+        //O nó que entra passa a apontar para o nó de referencia(o ultimo da fila)
         refNoEntrada = noNovo;
+        //O nó de referencia(ultimo da fila) passa ser o novo nó.
     }
 
     public boolean isEmpty(){
